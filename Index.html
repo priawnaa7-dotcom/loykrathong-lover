@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ลอยกระทงกับแฟน 🌕</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Charm:wght@700&family=Noto+Sans+Thai:wght@400;700&display=swap');
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: radial-gradient(ellipse at top, #0b1736 0%, #02010a 70%);
+      font-family: 'Noto Sans Thai', sans-serif;
+      color: white;
+    }
+
+    /* พระจันทร์ */
+    .moon {
+      position: absolute;
+      top: 80px;
+      right: 120px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff9e6, #d8c36a);
+      box-shadow: 0 0 50px 20px rgba(255, 250, 200, 0.3);
+      z-index: 1;
+    }
+
+    /* เมฆ */
+    .cloud {
+      position: absolute;
+      width: 200px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      filter: blur(20px);
+      animation: moveCloud 60s linear infinite;
+      z-index: 3;
+    }
+    .cloud:nth-child(1) { top:120px; left:-200px; animation-delay:0s; }
+    .cloud:nth-child(2) { top:180px; left:-400px; animation-delay:20s; }
+    .cloud:nth-child(3) { top:220px; left:-600px; animation-delay:40s; }
+
+    @keyframes moveCloud {
+      from { transform: translateX(-300px); }
+      to { transform: translateX(120vw); }
+    }
+
+    /* ดาว */
+    .stars {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      width: 2px; height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite ease-in-out;
+      opacity: 0.8;
+    }
+    @keyframes twinkle { 0%,100%{opacity:0.3;} 50%{opacity:1;} }
+
+    /* แม่น้ำ + คลื่น */
+    .river {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: url('images/river_night.jpg') no-repeat center/cover;
+    }
+    .river::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        to right,
+        rgba(255,255,255,0.08) 0px,
+        rgba(255,255,255,0.05) 50px,
+        rgba(0,0,50,0.1) 100px
+      );
+      animation: waveMove 10s linear infinite;
+      opacity: 0.2;
+    }
+    @keyframes waveMove {
+      from { background-position: 0 0; }
+      to { background-position: 400px 0; }
+    }
+
+    .light-reflect {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 200px;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.1), transparent);
+      animation: shimmer 6s ease-in-out infinite alternate;
+      z-index: 4;
+    }
+    @keyframes shimmer { from {opacity: 0.2;} to {opacity: 0.5;} }
+
+    /* ปุ่ม */
+    .controls {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 10;
+    }
+    button {
+      background: #ffb703;
+      border: none;
+      padding: 12px 22px;
+      margin: 5px;
+      border-radius: 999px;
+      cursor: pointer;
+      color: #222;
+      font-size: 16px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    button:hover { background: #f77f00; color: white; }
+
+    /* กระทง */
+    .krathong {
+      position: absolute;
+      bottom: 70px;
+      width: 90px;
+      opacity: 0.95;
+      animation: float 8s ease-in-out infinite;
+      z-index: 6;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* ข้อความบนกระทง */
+    .msg {
+      position: absolute;
+      bottom: 105%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 220px;
+      text-align: center;
+      padding: 8px 12px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 12px;
+      font-size: 18px;
+      font-family: 'Charm', cursive;
+      color: #ffdee9;
+      text-shadow: 0 0 10px #ff8fb6, 0 0 20px #ff4081;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #ffb6c1, 0 0 10px #ff80ab; }
+      to { text-shadow: 0 0 20px #ffb6c1, 0 0 40px #ff4081; }
+    }
+
+    /* แสงเทียน */
+    .light {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 20px;
+      background: radial-gradient(circle, rgba(255,255,150,0.9), rgba(255,120,0,0.4));
+      border-radius: 50%;
+      animation: flicker 0.2s infinite alternate;
+      box-shadow: 0 0 15px rgba(255,190,80,0.6);
+    }
+    @keyframes flicker {
+      from { transform: translateX(-50%) scale(1); }
+      to { transform: translateX(-50%) scale(1.2); }
+    }
+
+    /* เงาสะท้อน */
+    .reflection {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) scaleY(-1);
+      opacity: 0.3;
+      filter: blur(4px);
+    }
+
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+  <div class="moon"></div>
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+
+  <div class="river" id="river">
+    <div class="light-reflect"></div>
+  </div>
+
+  <canvas id="fireworks"></canvas>
+
+  <div class="controls">
+    <button id="floatBtn">ลอยกระทง 🪷</button>
+    <button id="fireBtn">จุดพลุ 🎆</button>
+    <button id="resetBtn">รีเซ็ตน้ำ</button>
+    <button id="musicBtn">🔈 เปิดเพลง</button>
+  </div>
+
+  <!-- เสียงทั้งหมด -->
+  <audio id="bg-music" src="sounds/loy_krathong.mp3" loop></audio>
+  <audio id="water-sound" src="sounds/water.mp3" loop></audio>
+  <audio id="firework-sound" src=""></audio>
+
+  <script>
+    const river = document.getElementById('river');
+    const floatBtn = document.getElementById('floatBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const musicBtn = document.getElementById('musicBtn');
+    const fireBtn = document.getElementById('fireBtn');
+    const bgMusic = document.getElementById('bg-music');
+    const waterSound = document.getElementById('water-sound');
+    const fireSound = document.getElementById('firework-sound');
+    const starsContainer = document.getElementById('stars');
+
+    // สร้างดาว
+    for (let i = 0; i < 80; i++) {
+      const s = document.createElement('div');
+      s.classList.add('star');
+      s.style.top = Math.random() * 50 + '%';
+      s.style.left = Math.random() * 100 + '%';
+      s.style.animationDelay = Math.random() * 2 + 's';
+      starsContainer.appendChild(s);
+    }
+
+    const krathongImages = [
+      'images/1.png','images/2.png','images/3.png','images/4.png'
+    ];
+
+    // ✅ เพิ่มข้อความสุ่มเป็น 10 ข้อความ
+    const loveMsgs = [
+      'ขอให้เรารักกันไปนานๆ ❤️',
+      'คืนนี้เธอสวยกว่าดวงจันทร์เลยนะ 🌕',
+      'รักนี้ขอฝากไว้กับสายน้ำ 🌊',
+      'เธอคือแสงของใจฉัน 🕯️',
+      'ขอให้เรามีความสุขเหมือนคืนนี้เสมอ 💞',
+      'เมื่ิไหร่จะได้เจอกัน 🌏',
+      'ทุกคืนที่มีเธอคือคืนพิเศษนะ 💖',
+      'เธอคือคนที่ำให้ฉันมีกำลังใจ 🎇',
+      'ขอให้รักเราไม่จมหายไปตามสายน้ำ 🌈',
+      'คืนนี้ขอให้เราอยู่ด้วยกันแบบนี้นานๆ 💘'
+    ];
+
+    // ลอยกระทง
+    function floatKrathong() {
+      const k = document.createElement('div');
+      k.classList.add('krathong');
+
+      const img = document.createElement('img');
+      img.src = krathongImages[Math.floor(Math.random() * krathongImages.length)];
+      img.style.width = `${80 + Math.random() * 40}px`;
+
+      const msg = document.createElement('div');
+      msg.classList.add('msg');
+      msg.textContent = loveMsgs[Math.floor(Math.random() * loveMsgs.length)];
+
+      const light = document.createElement('div');
+      light.classList.add('light');
+
+      const reflection = document.createElement('img');
+      reflection.src = img.src;
+      reflection.classList.add('reflection');
+      reflection.style.width = img.style.width;
+
+      k.style.left = '-120px';
+      k.style.bottom = `${70 + Math.random() * 60}px`;
+
+      k.append(msg, img, light, reflection);
+      river.append(k);
+
+      const duration = 25000 + Math.random() * 8000;
+      const start = performance.now();
+
+      function animate(t) {
+        const p = (t - start) / duration;
+        k.style.left = `${p * (window.innerWidth + 200) - 100}px`;
+        if (p < 1) requestAnimationFrame(animate);
+        else k.remove();
+      }
+      requestAnimationFrame(animate);
+    }
+
+    floatBtn.onclick = floatKrathong;
+    document.body.onkeydown = (e) => { if (e.code === 'Space') floatKrathong(); };
+    resetBtn.onclick = () => river.innerHTML = '<div class="light-reflect"></div>';
+
+    musicBtn.onclick = () => {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        waterSound.volume = 0.15;
+        waterSound.play();
+        musicBtn.textContent = '🔊 ปิดเพลง';
+      } else {
+        bgMusic.pause();
+        waterSound.pause();
+        musicBtn.textContent = '🔈 เปิดเพลง';
+      }
+    };
+
+    // พลุ
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    let fireworks = [], particles = [];
+    const resize = () => { canvas.width = innerWidth; canvas.height = innerHeight; };
+    resize(); addEventListener('resize', resize);
+
+    class Firework {
+      constructor(x, y) {
+        this.x = x; this.y = canvas.height;
+        this.target = y;
+        this.color = `hsl(${Math.random() * 360},100%,60%)`;
+        this.boom = false;
+      }
+      update() {
+        if (this.y > this.target) this.y -= 6;
+        else {
+          this.boom = true;
+          fireSound.src = `sounds/firework${Math.ceil(Math.random()*3)}.mp3`; // 🔊 สุ่มเสียงพลุ
+          fireSound.currentTime = 0;
+          fireSound.volume = 0.2;
+          fireSound.play();
+          for (let i = 0; i < 40; i++)
+            particles.push(new Particle(this.x, this.y, this.color));
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 3, 0, 2 * Math.PI);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+    }
+
+    class Particle {
+      constructor(x, y, c) {
+        this.x = x; this.y = y; this.c = c; this.life = 80;
+        this.vx = (Math.random() - 0.5) * 8;
+        this.vy = (Math.random() - 0.5) * 8;
+      }
+      update() { this.x += this.vx; this.y += this.vy; this.life--; }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 2, 0, 2 * Math.PI);
+        ctx.fillStyle = this.c;
+        ctx.fill();
+      }
+    }
+
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      fireworks.forEach((f, i) => { f.update(); f.draw(); if (f.boom) fireworks.splice(i, 1); });
+      particles.forEach((p, i) => { p.update(); p.draw(); if (p.life <= 0) particles.splice(i, 1); });
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    fireBtn.onclick = () => {
+      const x = Math.random() * canvas.width * 0.8 + canvas.width * 0.1;
+      const y = Math.random() * canvas.height * 0.4 + 100;
+      fireworks.push(new Firework(x, y));
+    };
+
+    // พลุอัตโนมัติ
+    setInterval(() => {
+      const x = Math.random() * canvas.width * 0.8 + canvas.width * 0.1;
+      const y = Math.random() * canvas.height * 0.4 + 100;
+      fireworks.push(new Firework(x, y));
+    }, Math.random() * 2000 + 2000);
+  </script>
+</body>
+</html>
